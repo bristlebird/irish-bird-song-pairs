@@ -38,5 +38,5 @@
         "name": "wren",
         "image": "assets/img/wren.webp",
         "audio": "assets/audio/wren.mp3"
-    },
+    }
 ]

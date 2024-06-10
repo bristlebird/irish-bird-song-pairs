@@ -82,6 +82,16 @@ body {
     --moon-raker: #C3CCF2;
     --melrose: #B9C0FF;
 
+    /* Block background colours */
+    --bg-page-color: var(--tuna);
+
+    /* Text colours */
+    --text-color: var(--ghost);
+    --link-color: var(--melrose);
+
+    /* Button colors */
+    --btn-color: var(--melrose);
+
     /* Layout: push footer to bottom of page */
     display: flex;
     flex-direction: column;
@@ -91,38 +101,97 @@ body {
     min-width: 100%;
 
 
-    background-color: var(--tuna);
+    background-color: var(--bg-page-color);
     font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
-    color: var(--ghost);   
+    color: var(--text-color);   
     font-size: 1.5em; 
     line-height: 1.4;
 }
+h1 {
+    font-size: 3em;
+    font-size: clamp(2.5rem,2rem + 3.125vw,4rem);
+    font-weight: 400;
+    padding: 0 .25rem 2rem;
+}
 a {
-    color: var(--melrose);
+    color: var(--link-color);
 }
 main {
     flex: 1 0 auto;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column; 
+    width: calc(100% - 2rem);   
 }
-/* Cards container grid */
-.cards {
+/* Board (cards container) - 4 x 4 layout with grid */
+#board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px,1fr));
+    grid-gap: 1rem;
+    justify-content: center;
+    /* add perspective for 3d card rotation */
+    perspective: 800px; 
+    width: 100%;
 
 }
 
 .card {
+    /* make card flip 3d */
+    transform-style: preserve-3d;
+    transition: transform .3s ease-in-out;
+    border-radius: .25rem;
+    position: relative;
+    height: calc(60px + 1rem);
+}
+/* rotate active / clicked card */
+.card.active {
+    transform: rotateY(180deg);
+}
+
+/* Front & back of cards */
+.front, .back {
+    /* hide card when rotated */
+    backface-visibility: hidden;
+    /* absolutely position both faces to fill card space */
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
+/* front face down to start */
+.front {
+    transform: rotateY(180deg);
+}
+.back {
     /* Card background from Lea Verou's CSS Patterns Gallery CSS: https://projects.verou.me/css3patterns/#shippo */
     background-color:#def;
     background-image: radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%),
     radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%);
-    background-size:80px 80px;
-    background-position:0 0, 40px 40px;
+    background-size:1rem 1rem;
+    background-position:0 0, .5rem .5rem;
+    /* background-position: center center; */
+    border: .5rem solid var(--text-color);
+    border-radius: .25rem;
+
 }
+
 .results {
+
 
 }
 .controls {
+    display: flex;
+    justify-content: center;
 
+}
+
+button {
+    font-size: .875em;
+    padding: .75rem 2rem;
+    text-transform: uppercase;
+    background-color: var(--btn-color);
+    border-radius: 2rem;
+    border: none;
+    margin: 2rem;
 }
 
 /* Page footer */
