@@ -163,7 +163,6 @@ main {
 }
 .card__img {
   width: 100%;
-  border-radius: .25rem;
 }
 figcaption, .card__caption {
 
@@ -200,6 +199,9 @@ figcaption, .card__caption {
     margin: 0;    
     transform: rotateY(180deg);
     padding: .25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 div[data-slug="blackbird"] .front {

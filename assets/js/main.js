@@ -15,7 +15,8 @@ let cards = [], card1, card2; // array for cards html & cards in play.
 let inPlay = true; // set to false after each turn
 let pair = []; // pair to compare array for match
 let movesMade = 0;
-let moves = document.querySelector('.moves');
+let moves = document.getElementById('moves');
+let currentBird = document.getElementById('bird');
 
 
 const board = document.getElementById('board'); // container to put html cards in 
@@ -41,8 +42,7 @@ function renderBoard() {
         cardItem.setAttribute('data-slug', slugify(card.name)); // convert name to slug for clean data attribute
         cardItem.innerHTML = `
             <figure class="front">
-                <img class="card__img" src="${card.image}" width="60" height="60" alt="${card.name}">
-                <figcaption>${card.name}</figcaption>
+                <img class="card__img" src="${card.image}" width="60" height="60" alt="${card.name}">              
             </figure>
             <div class="back"></div>
         `;
@@ -60,6 +60,10 @@ function flip() {
     if (inPlay){ // turn in play 'til 2 cards flipped
         if (this === card1 ) return; // do nothing & exit if card1 clicked again.
         this.classList.add('active'); // in play so set to active to flip card
+        // get name from alt tag and set as name of current bird
+        currentBird.innerHTML = this.querySelector('.card__img').getAttribute('alt');
+        // console.log(this.dataset.name);
+        // currentBird.innerHTML = this.dataset.name;
         if (!card1) { // pass card1 to this object if card1 not already set then exit to wait for next card
             card1 = this;
             return;
