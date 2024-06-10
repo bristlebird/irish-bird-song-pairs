@@ -11,7 +11,13 @@ Function list:
 */
 
 // Set up some variables
-let cards = []; // array for cards html.
+let cards = [], card1, card2; // array for cards html & cards in play.
+let inPlay = true; // set to false after each turn
+let pair = []; // pair to compare array for match
+let movesMade = 0;
+let moves = document.querySelector('.moves');
+
+
 const board = document.getElementById('board'); // container to put html cards in 
 
 // Read card data from 
@@ -24,7 +30,7 @@ fetch("../../data.json")
         renderBoard();
     });
 
-    /**
+/**
  * Render Card html
  * 
  */
@@ -39,11 +45,75 @@ function renderBoard() {
             </div>
             <div class="back"></div>
         `;
+        cardItem.addEventListener('click', flip);
         board.appendChild(cardItem);
     }
 }
 
 
+/**
+ * Flip - only flip if turn is active
+ * 
+ */
+function flip() {
+    if (inPlay){ // turn in play 'til 2 cards flipped
+        if (this === card1 ) return; // do nothing & exit if card1 clicked again.
+        this.classList.add('active'); // in play so set to active to flip card
+        if (!card1) { // pass card1 to this object if card1 not already set then exit to wait for next card
+            card1 = this;
+            return;
+        } 
+        card2 = this; // pass this object to card 2 for class switching & comparisons
+        inPlay = false; // pause play after second card turned to prevent further card being turned
+        checkForMatch();
+    }
+}
+
+/**
+ * Check for Match
+ * once 2 cards are flipped / active - check if 1st 2 array items passed are same
+ */
+function checkForMatch() {
+    console.log('checking for match');
+    // if data slugs match disable clicks else unflip.
+    let isMatch = card1.dataset.slug === card2.dataset.slug;
+    isMatch ? lockMatched() : unFlip();
+    // increment & update moves made
+    moves.innerHTML = ++movesMade;
+}
+
+/**
+ * Unflip Cards when no match by removing active class after 1 second delay
+ * 
+ */
+function unFlip() {
+    console.log('Boo! No match')
+    setTimeout(() => {
+        card1.classList.remove('active');
+        card2.classList.remove('active');
+        resetTurn();
+    }, 1000);
+}
+
+/**
+ * Lock Matched Cards - add matched class to card & remove active class
+ * 
+ */
+function lockMatched() {
+    card1.classList.replace('active', 'match');
+    card2.classList.replace('active', 'match');
+    resetTurn(); // reset for next turn
+}
+
+/**
+ * Reset for next turn by clearing pair in play
+ * 
+ */
+function resetTurn() {
+    card1 = null;
+    card2 = null;
+    inPlay = true;
+}
 // ====================================================================
 // HELPER FUNCTIONS
 // ====================================================================

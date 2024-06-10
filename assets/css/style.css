@@ -141,12 +141,17 @@ main {
     border-radius: .25rem;
     position: relative;
     height: calc(60px + 1rem);
+    /* set pointer events to all to make clickable */
+    pointer-events: all; 
 }
 /* rotate active / clicked card */
-.card.active {
+.active, .match {
     transform: rotateY(180deg);
 }
-
+.match {
+  /* remove pointer events to disabvlew clicks */
+  pointer-events: none;
+}
 /* Front & back of cards */
 .front, .back {
     /* hide card when rotated */
