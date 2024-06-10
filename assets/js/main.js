@@ -40,9 +40,10 @@ function renderBoard() {
         cardItem.classList.add('card');
         cardItem.setAttribute('data-slug', slugify(card.name)); // convert name to slug for clean data attribute
         cardItem.innerHTML = `
-            <div class="front">
+            <figure class="front">
                 <img class="card__img" src="${card.image}" width="60" height="60" alt="${card.name}">
-            </div>
+                <figcaption>${card.name}</figcaption>
+            </figure>
             <div class="back"></div>
         `;
         cardItem.addEventListener('click', flip);

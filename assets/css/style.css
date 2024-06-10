@@ -81,6 +81,22 @@ body {
     --ghost: #C8C8D9;
     --moon-raker: #C3CCF2;
     --melrose: #B9C0FF;
+    /* blackbird */
+    --denim: #1D71B9; 
+    /* blue tit */
+    --gray-suit: #BEBCC9;
+    /* chaffinch */
+    --morning-glory: #8CCEDA;
+    /* coal-tit */
+    --mulberry: #CB5393;
+    /* puffin */
+    --william: #396268;
+    /* robin */
+    --gothic: #6C90A0;
+    /* song thrush */
+    --fountain-blue: #68ABC5;
+    /* wren */
+    --juniper: #6A8E8C;
 
     /* Block background colours */
     --bg-page-color: var(--tuna);
@@ -125,7 +141,7 @@ main {
 /* Board (cards container) - 4 x 4 layout with grid */
 #board {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(70px,1fr));
     grid-gap: 1rem;
     justify-content: center;
     /* add perspective for 3d card rotation */
@@ -140,9 +156,25 @@ main {
     transition: transform .3s ease-in-out;
     border-radius: .25rem;
     position: relative;
-    height: calc(60px + 1rem);
+    min-height: calc(70px + 2rem);
+    /* height: auto; */
     /* set pointer events to all to make clickable */
     pointer-events: all; 
+}
+.card__img {
+  width: 100%;
+  border-radius: .25rem;
+}
+figcaption, .card__caption {
+
+  font-size: clamp(.5rem,.5rem + 2.125vw,1.25rem);
+  color: #fff;
+  font-size: clamp(.5rem,.5rem + 0.5vw,1.25rem);
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-shadow: rgba(0,0,0,.3) 0 1px 1px ;
 }
 /* rotate active / clicked card */
 .active, .match {
@@ -161,11 +193,40 @@ main {
     height: 100%;
     width: 100%;
     top: 0;
+    border-radius: .25rem;
 }
 /* front face down to start */
 .front {
+    margin: 0;    
     transform: rotateY(180deg);
+    padding: .25rem;
 }
+
+div[data-slug="blackbird"] .front {
+  background-color: var(--denim);
+}
+div[data-slug="blue-tit"] .front {
+  background-color: var(--gray-suit);
+}
+div[data-slug="chaffinch"] .front {
+  background-color: var(--morning-glory);
+}
+div[data-slug="coal-tit"] .front {
+  background-color: var(--mulberry);
+}
+div[data-slug="puffin"] .front {
+  background-color: var(--william);
+}
+div[data-slug="robin"] .front {
+  background-color: var(--gothic);
+}
+div[data-slug="song-thrush"] .front {
+  background-color: var(--fountain-blue);
+}
+div[data-slug="wren"] .front {
+  background-color: var(--juniper);
+}
+
 .back {
     /* Card background from Lea Verou's CSS Patterns Gallery CSS: https://projects.verou.me/css3patterns/#shippo */
     background-color:#def;
@@ -175,7 +236,6 @@ main {
     background-position:0 0, .5rem .5rem;
     /* background-position: center center; */
     border: .5rem solid var(--text-color);
-    border-radius: .25rem;
 
 }
 
