@@ -15,8 +15,10 @@ let cards = [], card1, card2; // array for cards html & cards in play.
 let inPlay = true; // set to false after each turn
 let pair = []; // pair to compare array for match
 let movesMade = 0;
-let moves = document.getElementById('moves');
-let currentBird = document.getElementById('bird');
+const moves = document.getElementById('moves');
+const currentBird = document.getElementById('bird');
+let birdSong = true; // whether to play bird song or not
+const currentSong = document.getElementById('bird-song');
 
 
 const board = document.getElementById('board'); // container to put html cards in 
@@ -24,8 +26,7 @@ const board = document.getElementById('board'); // container to put html cards i
 // Read card data from 
 fetch("../../data.json")
     .then((response) => response.json())
-    .then((json) => {
-        
+    .then((json) => {        
         cards = [...json, ...json];
         shuffleArray(cards);
         renderBoard();
@@ -51,7 +52,6 @@ function renderBoard() {
     }
 }
 
-
 /**
  * Flip - only flip if turn is active
  * 
@@ -62,6 +62,11 @@ function flip() {
         this.classList.add('active'); // in play so set to active to flip card
         // get name from alt tag and set as name of current bird
         currentBird.innerHTML = this.querySelector('.card__img').getAttribute('alt');
+        // play current song if audio enabled.
+        if (birdSong) {
+            currentSong.setAttribute('src', 'assets/audio/' + this.dataset.slug + '.mp3');
+            currentSong.play();
+        }
         // console.log(this.dataset.name);
         // currentBird.innerHTML = this.dataset.name;
         if (!card1) { // pass card1 to this object if card1 not already set then exit to wait for next card
@@ -101,8 +106,8 @@ function unFlip() {
 }
 
 /**
- * Lock Matched Cards - add matched class to card & remove active class
- * 
+ * Lock Matched Cards - replace active class with match 
+ * -> has pointer-events set to none to disabe clicks
  */
 function lockMatched() {
     card1.classList.replace('active', 'match');
@@ -119,6 +124,7 @@ function resetTurn() {
     card2 = null;
     inPlay = true;
 }
+
 // ====================================================================
 // HELPER FUNCTIONS
 // ====================================================================
