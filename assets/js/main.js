@@ -24,7 +24,8 @@ const currentSong = document.getElementById('bird-song');
 const board = document.getElementById('board'); // container to put html cards in 
 
 // Read card data from 
-fetch("../../data.json")
+// fetch("../../data.json")
+fetch("https://raw.githubusercontent.com/bristlebird/irish-bird-song-pairs/main/data.json")
     .then((response) => response.json())
     .then((json) => {        
         cards = [...json, ...json];
