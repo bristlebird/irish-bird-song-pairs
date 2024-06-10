@@ -21,8 +21,27 @@ fetch("../../data.json")
         
         cards = [...json, ...json];
         shuffleArray(cards);
+        renderBoard();
     });
 
+    /**
+ * Render Card html
+ * 
+ */
+function renderBoard() {
+    for (let card of cards) {
+        const cardItem = document.createElement('div');
+        cardItem.classList.add('card');
+        cardItem.setAttribute('data-slug', slugify(card.name)); // convert name to slug for clean data attribute
+        cardItem.innerHTML = `
+            <div class="front">
+                <img class="card__img" src="${card.image}" width="60" height="60" alt="${card.name}">
+            </div>
+            <div class="back"></div>
+        `;
+        board.appendChild(cardItem);
+    }
+}
 
 
 // ====================================================================
@@ -41,3 +60,17 @@ function shuffleArray(arr) {
     return arr;
 }
 
+/**
+ * Slugify
+ * https://byby.dev/js-slugify-string
+ */
+function slugify(str) {
+    return String(str)
+      .normalize('NFKD') // split accented characters into their base characters and diacritical marks
+      .replace(/[\u0300-\u036f]/g, '') // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+      .trim() // trim leading or trailing whitespace
+      .toLowerCase() // convert to lowercase
+      .replace(/[^a-z0-9 -]/g, '') // remove non-alphanumeric characters
+      .replace(/\s+/g, '-') // replace spaces with hyphens
+      .replace(/-+/g, '-'); // remove consecutive hyphens
+}
