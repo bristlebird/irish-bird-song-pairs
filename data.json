@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Blackbird",
+        "image": "assets/img/blackbird.webp",
+        "audio": "assets/audio/blackbird.mp3"
+    },
+    {
+        "name": "Blue Tit",
+        "image": "assets/img/blue-tit.webp",
+        "audio": "assets/audio/blue-tit.mp3"
+    },
+    {
+        "name": "Chaffinch",
+        "image": "assets/img/chaffinch.webp",
+        "audio": "assets/audio/chaffinch.mp3"
+    },
+    {
+        "name": "Coal Tit",
+        "image": "assets/img/coal-tit.webp",
+        "audio": "assets/audio/coal-tit.mp3"
+    },
+    {
+        "name": "Puffin",
+        "image": "assets/img/puffin.webp",
+        "audio": "assets/audio/puffin.mp3"
+    },
+    {
+        "name": "Robin",
+        "image": "assets/img/robin.webp",
+        "audio": "assets/audio/robin.mp3"
+    },
+    {
+        "name": "Song Thrush",
+        "image": "assets/img/song-thrush.webp",
+        "audio": "assets/audio/song-thrush.mp3"
+    },
+    {
+        "name": "wren",
+        "image": "assets/img/wren.webp",
+        "audio": "assets/audio/wren.mp3"
+    },
+]
