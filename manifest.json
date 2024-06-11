@@ -1,17 +1,30 @@
 {
+    "lang": "en",
     "short_name": "Irish Bird Song Pairs",
-    "name": "Irish Bird Song Pairs - a memory card game with bird song",
-    "icons": [{
-      "src": "assets/ico/icon-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "assets/ico/icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }],
-    "start_url": "/?utm_source=homescreen",
+    "name": "Irish Bird Song Pairs",
+    "description": "A memory card game with bird song",
+    "icons": [
+        {
+            "src": "assets/ico/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/ico/icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/ico/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/",
+    "display": "minimal-ui",
     "background_color": "#343443",
     "theme_color": "#343443"
 }
