@@ -13,30 +13,31 @@ Function list:
 // Set up some variables
 let cards = [], card1, card2; // array for cards html & cards in play.
 let inPlay = true; // set to false after each turn
-let pair = []; // pair to compare array for match
 let movesMade = 0;
 const moves = document.getElementById('moves');
 const currentBird = document.getElementById('bird');
 let birdSong = true; // whether to play bird song or not
 const currentSong = document.getElementById('bird-song');
+const board = document.getElementById('board'); // container to put html cards in 
 const resetBtn = document.getElementById('reset');
 resetBtn.addEventListener('click', newGame);
 
-
-const board = document.getElementById('board'); // container to put html cards in 
-
-// Read card data from 
-// fetch("../../data.json")
-fetch("https://raw.githubusercontent.com/bristlebird/irish-bird-song-pairs/main/data.json")
+/**
+ * Initialise with immediatley invoked function / IFFE
+ * - Read raw card data from githubusercontent as relative paths don't work with github pages
+ */  
+(function () {
+    fetch("https://raw.githubusercontent.com/bristlebird/irish-bird-song-pairs/main/data.json")
     .then((response) => response.json())
     .then((json) => {        
         cards = [...json, ...json];
         shuffleArray(cards);
         renderBoard();
     });
+})();
 
 /**
- * Render Card html
+ * Render Card html from cards array and attach to the board
  * 
  */
 function renderBoard() {
@@ -74,8 +75,6 @@ function flip() {
             currentSong.setAttribute('src', 'assets/audio/' + this.dataset.slug + '.mp3');
             currentSong.play();
         }
-        // console.log(this.dataset.name);
-        // currentBird.innerHTML = this.dataset.name;
         if (!card1) { // pass card1 to this object if card1 not already set then exit to wait for next card
             card1 = this;
             return;
@@ -104,7 +103,6 @@ function checkForMatch() {
  * 
  */
 function unFlip() {
-    console.log('Boo! No match')
     setTimeout(() => {
         card1.classList.remove('active');
         card2.classList.remove('active');
@@ -131,18 +129,20 @@ function resetTurn() {
     inPlay = true;
 }
 
+/**
+ * New Game (called from reset button click)
+ * - turn cards face down, shuffle deck in array, 
+ * empty the board then render shuffled cards & reset variables
+ */
 function newGame() {
     // remove match class from cards
     const matchedCards = document.getElementsByClassName('card');
-    // console.log(matchedCards);
-    // matchedCards.forEach(card => card.classList.remove('match')); 
     for (let card of matchedCards) {
         if (card.classList.contains('match')) card.classList.remove('match');
         // & in case half way through a turn:
         if (card.classList.contains('active')) card.classList.remove('active');
     }
     shuffleArray(cards);
-
     setTimeout(() => {
         board.innerHTML = '';  
         renderBoard();  
@@ -150,8 +150,7 @@ function newGame() {
         movesMade = 0;
         moves.innerHTML = 0; 
         currentBird.innerHTML = '';   
-    
-    }, 500)
+    }, 500);
 }
 // ====================================================================
 // HELPER FUNCTIONS
