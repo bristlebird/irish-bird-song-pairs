@@ -19,6 +19,8 @@ const moves = document.getElementById('moves');
 const currentBird = document.getElementById('bird');
 let birdSong = true; // whether to play bird song or not
 const currentSong = document.getElementById('bird-song');
+const resetBtn = document.getElementById('reset');
+resetBtn.addEventListener('click', newGame);
 
 
 const board = document.getElementById('board'); // container to put html cards in 
@@ -121,11 +123,30 @@ function lockMatched() {
  * 
  */
 function resetTurn() {
-    card1 = null;
-    card2 = null;
+    [card1, card2] = [null, null];
     inPlay = true;
 }
 
+function newGame() {
+    // remove match class from cards
+    const matchedCards = document.getElementsByClassName('card');
+    // console.log(matchedCards);
+    // matchedCards.forEach(card => card.classList.remove('match')); 
+    for (let card of matchedCards) {
+        card.classList.remove('match');
+    }
+    shuffleArray(cards);
+
+    setTimeout(() => {
+        board.innerHTML = '';  
+        renderBoard();  
+        resetTurn();
+        movesMade = 0;
+        moves.innerHTML = 0; 
+        currentBird.innerHTML = '';   
+    
+    }, 500)
+}
 // ====================================================================
 // HELPER FUNCTIONS
 // ====================================================================
