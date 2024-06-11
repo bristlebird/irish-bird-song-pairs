@@ -119,6 +119,7 @@ body {
 
     background-color: var(--bg-page-color);
     font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
     color: var(--text-color);   
     font-size: 1.25em; 
     line-height: 1.4;
@@ -127,7 +128,7 @@ h1 {
     font-size: 1.75em;
     font-size: clamp(1.5rem,1.5rem + 2.5vw,4rem);
     font-weight: 400;
-    padding: 0 .25rem 2rem;
+    padding: 0 .25rem 1rem;
 }
 a {
     color: var(--link-color);
@@ -243,10 +244,6 @@ div[data-slug="wren"] .front {
 
 }
 
-.results {
-  text-align: center;
-
-}
 .controls {
     display: flex;
     justify-content: center;

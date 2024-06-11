@@ -3,36 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irish Bird Song Pairs - Memory Card Game</title>
+    <title>Irish Bird Song Pairs</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <meta name="description" content="Irish Bird Song Pairs is a simple memory card game that can be played with both pictures and sound bird song.">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" href="assets/ico/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/ico/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#343443">  
 </head>
 <body>
-    
     <header>
         <h1>Irish Bird Song Pairs</h1>
     </header>
-
-    
     <main>
-
         <div id="board"></div>
-
         <div class="results">
             <p>Moves made: <span id="moves">0</span> | Bird: <span id="bird"></span></p>
         </div>
-
         <div class="controls">
             <button id="reset">Reset</button>
             <audio controls src="assets/audio/blackbird.mp3" id="bird-song" ></audio>    
         </div>
-        
-
+        <p>A little memory card game with birdsong!</p>
     </main>
-
     <footer>
-        <p>A little javascript memory card game by <a href="https://github.com/bristlebird">Bristlebird</a></p>
+        <p>Built by <a href="https://github.com/bristlebird" target="_blank" title="Bristlebird on Github">Bristlebird</a> | Icons by <a href="https://thenounproject.com/browse/collection-icon/tweeting-birds-5456/" target="_blank" title="Bird Icons">Lee Mette (Noun Project)</a></p>
     </footer>
-    
     <script src="assets/js/main.js"></script>
 </body>
 </html>

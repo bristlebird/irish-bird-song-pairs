@@ -1,0 +1,17 @@
+{
+    "short_name": "Irish Bird Song Pairs",
+    "name": "Irish Bird Song Pairs - a memory card game with bird song",
+    "icons": [{
+      "src": "assets/ico/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/ico/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }],
+    "start_url": "/?utm_source=homescreen",
+    "background_color": "#343443",
+    "theme_color": "#343443"
+}
