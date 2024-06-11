@@ -11,6 +11,7 @@ Irish bird song pairs function list:
 - New Game (Restart)
 - Switch audio play mode
 - Display Moves made
+- Display Bird name
 - Slugify helper
 */
 
@@ -89,7 +90,6 @@ function flip() {
         if (this === card1 ) return; // do nothing & exit if card1 clicked again.
         this.classList.add('active'); // in play so set to active to flip card
         // get name from alt tag and set as name of current bird
-
         if (showImage) displayBirdName(this.querySelector('.card__img').getAttribute('alt'));
         // play current song if audio enabled.
         if (birdSong) {
@@ -175,8 +175,6 @@ function newGame() {
         renderBoard();  
         resetTurn();
         movesMade = 0;
-        // const moves = document.getElementById('moves');
-        // moves.innerHTML = 0;
         displayMoves(movesMade); 
         displayBirdName('');
     }, 500);
