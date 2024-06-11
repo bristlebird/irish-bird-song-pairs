@@ -120,12 +120,12 @@ body {
     background-color: var(--bg-page-color);
     font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
     color: var(--text-color);   
-    font-size: 1.5em; 
+    font-size: 1.25em; 
     line-height: 1.4;
 }
 h1 {
-    font-size: 3em;
-    font-size: clamp(2.5rem,2rem + 3.125vw,4rem);
+    font-size: 1.75em;
+    font-size: clamp(1.5rem,1.5rem + 2.5vw,4rem);
     font-weight: 400;
     padding: 0 .25rem 2rem;
 }
@@ -136,7 +136,9 @@ main {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column; 
-    width: calc(100% - 2rem);   
+    width: calc(100% - 2rem);
+    justify-content: center;
+    max-width: 32rem;   
 }
 /* Board (cards container) - 4 x 4 layout with grid */
 #board {
@@ -242,7 +244,7 @@ div[data-slug="wren"] .front {
 }
 
 .results {
-
+  text-align: center;
 
 }
 .controls {
