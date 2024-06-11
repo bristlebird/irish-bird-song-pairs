@@ -147,6 +147,8 @@ main {
     /* add perspective for 3d card rotation */
     perspective: 800px; 
     width: 100%;
+    /* try to avoid layout shift by setting min-height */
+    min-height: 456px;
 }
 .card {
     /* make card flip 3d */
