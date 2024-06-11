@@ -1,13 +1,15 @@
 /*
-Function list:
-1. Shuffle deck
-2. Render cards
-3. Flip card on click
-4. Check for match (Once more than 1 card flipped )
-5. No match > unflip 
-6. Match > stayed flipped & disable click
-7. Flip next pair
-8. Start / Restart Game
+Irish bird song pairs function list:
+1. Initialise (Read card data, shuffle then render)
+2. Shuffle
+3. Render board
+4. Flip card on click
+5. Check for match (once 2nd card flipped)
+6. Lock matched cards
+7. Unflip when no match
+8. Reset to enable next turn
+9. New Game (Restart)
+10. Slugify helper
 */
 
 // Set up some variables
@@ -16,14 +18,18 @@ let inPlay = true; // set to false after each turn
 let movesMade = 0;
 const moves = document.getElementById('moves');
 const currentBird = document.getElementById('bird');
-let birdSong = true; // whether to play bird song or not
+let birdSong = false; // whether to play bird song or not
+let showImage = true; // whether to show bird image or not
+
 const currentSong = document.getElementById('bird-song');
 const board = document.getElementById('board'); // container to put html cards in 
-const resetBtn = document.getElementById('reset');
-resetBtn.addEventListener('click', newGame);
+const restartBtn = document.getElementById('restart');
+restartBtn.addEventListener('click', newGame); // Button to restart / reset game
+const audioControl = document.getElementById('audio-control');
+audioControl.addEventListener('click', switchAudio); // use to control audio / play modes
 
 /**
- * Initialise with immediatley invoked function / IFFE
+ * 1) Initialise with immediatley invoked function / IFFE
  * - Read raw card data from githubusercontent as relative paths don't work with github pages
  */  
 (function () {
@@ -37,8 +43,21 @@ resetBtn.addEventListener('click', newGame);
 })();
 
 /**
- * Render Card html from cards array and attach to the board
- * 
+ * 2) Shuffle Array 
+ * - using Fisher-Yates Sorting Algorithm:
+ * https://medium.com/@khaledhassan45/how-to-shuffle-an-array-in-javascript-6ca30d53f772
+ */
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // random index of remaining items
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // swap contents of current index i with random index j.
+    }
+    return arr;
+}
+
+/**
+ * 3) Render Board 
+ * - assemble card html from cards array and attach to the board
  */
 function renderBoard() {
     for (let card of cards) {
@@ -61,8 +80,8 @@ function renderBoard() {
 }
 
 /**
- * Flip - only flip if turn is active
- * 
+ * 4) Flip 
+ * - only flip card if turn is active play
  */
 function flip() {
     if (inPlay){ // turn in play 'til 2 cards flipped
@@ -86,21 +105,34 @@ function flip() {
 }
 
 /**
- * Check for Match
- * once 2 cards are flipped / active - check if 1st 2 array items passed are same
+ * 5) Check for Match
+ * - once 2 cards are flipped / active, check if card1 & card2 slugs are same
  */
 function checkForMatch() {
     console.log('checking for match');
     // if data slugs match disable clicks else unflip.
-    let isMatch = card1.dataset.slug === card2.dataset.slug;
-    isMatch ? lockMatched() : unFlip();
+    if (card1.dataset.slug === card2.dataset.slug) {
+        lockMatched();
+    } else {
+        unFlip();
+    }
     // increment & update moves made
     moves.innerHTML = ++movesMade;
 }
 
 /**
- * Unflip Cards when no match by removing active class after 1 second delay
- * 
+ * 6) Lock Matched 
+ *  - replace active class with match class (pointer-events set to none to disable click)
+ */
+function lockMatched() {
+    card1.classList.replace('active', 'match');
+    card2.classList.replace('active', 'match');
+    resetTurn(); // reset for next turn
+}
+
+/**
+ * 7) Unflip 
+ * - when no match by removing active class after 1 second delay
  */
 function unFlip() {
     setTimeout(() => {
@@ -111,18 +143,8 @@ function unFlip() {
 }
 
 /**
- * Lock Matched Cards - replace active class with match 
- * -> has pointer-events set to none to disabe clicks
- */
-function lockMatched() {
-    card1.classList.replace('active', 'match');
-    card2.classList.replace('active', 'match');
-    resetTurn(); // reset for next turn
-}
-
-/**
- * Reset for next turn by clearing pair in play
- * 
+ * 8) Reset Turn
+ * - enables next turn after pair matched or unflipped by clearing pair in play
  */
 function resetTurn() {
     [card1, card2] = [null, null];
@@ -130,7 +152,7 @@ function resetTurn() {
 }
 
 /**
- * New Game (called from reset button click)
+ * 9) New Game (called from Restart button click)
  * - turn cards face down, shuffle deck in array, 
  * empty the board then render shuffled cards & reset variables
  */
@@ -152,24 +174,37 @@ function newGame() {
         currentBird.innerHTML = '';   
     }, 500);
 }
+
+/**
+ * Switch Audio
+ * - clicking the bird icon cycles to the next play modes: 
+ * 1) audio off (image only)
+ * 2) audio on (sound and image)
+ * 3) audio only!
+ * -  updates bird icon state, audio play mode & image display state 
+ */
+function switchAudio() {
+    if (this.classList.contains('audio-off')) {
+        this.classList.replace('audio-off', 'audio-on');
+        birdSong = true;
+    } else if (this.classList.contains('audio-on')) {
+        this.classList.replace('audio-on', 'audio-only');
+        board.classList.add('images-off');
+        birdSong = true;
+    } else if (this.classList.contains('audio-only')) {
+        this.classList.replace('audio-only', 'audio-off');
+        board.classList.remove('images-off');
+        birdSong = false;
+    }
+}
+
 // ====================================================================
 // HELPER FUNCTIONS
 // ====================================================================
 
 /**
- * Shuffle Array using Fisher-Yates Sorting Algorithm
- * https://medium.com/@khaledhassan45/how-to-shuffle-an-array-in-javascript-6ca30d53f772
- */
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); // random index of remaining items
-        [arr[i], arr[j]] = [arr[j], arr[i]]; // swap contents of current index i with random index j.
-    }
-    return arr;
-}
-
-/**
- * Slugify
+ * 10) Slugify
+ * - convert name to lowercase, hyphenated slug for data attributes
  * https://byby.dev/js-slugify-string
  */
 function slugify(str) {

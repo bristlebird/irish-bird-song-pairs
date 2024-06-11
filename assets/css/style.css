@@ -138,6 +138,7 @@ main {
     justify-content: center;
     max-width: 32rem;   
 }
+
 /* Board (cards container) - 4 x 4 layout with grid */
 #board {
     display: grid;
@@ -163,7 +164,8 @@ main {
 .card__img {
   width: 100%;
 }
-/* rotate active / clicked card */
+
+/* Card rotation states: applied when card clicked / matched */
 .active, .match {
     transform: rotateY(180deg);
 }
@@ -191,6 +193,7 @@ main {
     flex-direction: column;
     justify-content: center;
 }
+
 /* Background colours for front face of bird cards */
 [data-slug="blackbird"] .front {
   background-color: var(--denim);
@@ -216,6 +219,14 @@ main {
 [data-slug="wren"] .front {
   background-color: var(--juniper);
 }
+/* images-off class applied to #board div to hide images for audio only mode */
+.images-off .card__img {
+  opacity: 0;
+}
+.images-off .front {
+  opacity: 0.75;
+  background-color: var(--btn-color) !important;
+}
 .back {
     /* Card background from Lea Verou's CSS Patterns Gallery CSS: https://projects.verou.me/css3patterns/#shippo */
     background-color:#def;
@@ -232,18 +243,78 @@ main {
 .controls {
     display: flex;
     justify-content: center;
+    gap: 1rem;
 }
-.controls > * {
-  background-color: var(--btn-color);
-  border-radius: 2rem;
+.controls > button {
   border: none;
   margin: .5rem;
+  flex: 1 0 150px;
 }
-button {
+/* restart button */
+.restart {
+    background-color: var(--btn-color);
     font-size: .875em;
     padding: .75rem 2rem;
     text-transform: uppercase;
     color: var(--bg-page-color);
+    border-radius: 2rem;
+}
+/* audio control button (contains bird icon) */
+.controls > .bird-audio {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.bird-audio {
+  display: flex;
+  align-items: center;
+}
+.bird-icon {
+  width: 60px;
+  fill: var(--btn-color);
+}
+.bird-audio::after {
+  content: '';
+  margin-left: .25rem;
+  white-space: nowrap;
+  color: var(--text-color);
+  width: 20px;
+  height: 1rem;
+  background-color: #396268;
+}
+/* 3 audio states: on (with image), off (with image), only (on without image) */
+/* audio off - show birds & hide notes */
+.audio-off #birds {
+  display: block;
+}
+.audio-off #sounds {
+  display: none;
+}
+.audio-off::after {
+  content: '[audio off]';
+}
+
+/* audio on - show notes & birds */
+.audio-on #sounds, .audio-on #birds {
+  display: block;
+}
+.audio-on::after {
+  content: '[audio on]';
+}
+
+/* audio only - show notes, hide birds */
+.audio-only #sounds {
+  display: block;
+}
+.audio-only #birds {
+  display: block;
+  opacity: .25;
+}
+.audio-only::after {
+  content: '[audio only]';
+}
+audio {
+  display: none;
 }
 footer {
     font-size: .75em;
