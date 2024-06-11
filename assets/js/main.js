@@ -133,7 +133,9 @@ function newGame() {
     // console.log(matchedCards);
     // matchedCards.forEach(card => card.classList.remove('match')); 
     for (let card of matchedCards) {
-        card.classList.remove('match');
+        if (card.classList.contains('match')) card.classList.remove('match');
+        // & in case half way through a turn:
+        if (card.classList.contains('active')) card.classList.remove('active');
     }
     shuffleArray(cards);
 
