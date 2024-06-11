@@ -75,7 +75,6 @@ textarea:not([rows]) {
 // GENERAL STYLES
 // ==================================================================== */
 body {
-
     /* Colors */
     --tuna: #343443;
     --ghost: #C8C8D9;
@@ -111,12 +110,9 @@ body {
     /* Layout: push footer to bottom of page */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     margin: 0;
     min-width: 100%;
-
-
     background-color: var(--bg-page-color);
     font-family: Garamond, Georgia, 'Times New Roman', Times, serif;
     text-align: center;
@@ -129,6 +125,7 @@ h1 {
     font-size: clamp(1.5rem,1.5rem + 2.5vw,4rem);
     font-weight: 400;
     padding: 0 .25rem 1rem;
+    margin-top: .5em;
 }
 a {
     color: var(--link-color);
@@ -150,9 +147,7 @@ main {
     /* add perspective for 3d card rotation */
     perspective: 800px; 
     width: 100%;
-
 }
-
 .card {
     /* make card flip 3d */
     transform-style: preserve-3d;
@@ -160,23 +155,11 @@ main {
     border-radius: .25rem;
     position: relative;
     min-height: calc(70px + 2rem);
-    /* height: auto; */
     /* set pointer events to all to make clickable */
     pointer-events: all; 
 }
 .card__img {
   width: 100%;
-}
-figcaption, .card__caption {
-
-  font-size: clamp(.5rem,.5rem + 2.125vw,1.25rem);
-  color: #fff;
-  font-size: clamp(.5rem,.5rem + 0.5vw,1.25rem);
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  text-transform: uppercase;
-  text-shadow: rgba(0,0,0,.3) 0 1px 1px ;
 }
 /* rotate active / clicked card */
 .active, .match {
@@ -206,32 +189,31 @@ figcaption, .card__caption {
     flex-direction: column;
     justify-content: center;
 }
-
-div[data-slug="blackbird"] .front {
+/* Background colours for front face of bird cards */
+[data-slug="blackbird"] .front {
   background-color: var(--denim);
 }
-div[data-slug="blue-tit"] .front {
+[data-slug="blue-tit"] .front {
   background-color: var(--gray-suit);
 }
-div[data-slug="chaffinch"] .front {
+[data-slug="chaffinch"] .front {
   background-color: var(--morning-glory);
 }
-div[data-slug="coal-tit"] .front {
+[data-slug="coal-tit"] .front {
   background-color: var(--mulberry);
 }
-div[data-slug="puffin"] .front {
+[data-slug="puffin"] .front {
   background-color: var(--william);
 }
-div[data-slug="robin"] .front {
+[data-slug="robin"] .front {
   background-color: var(--gothic);
 }
-div[data-slug="song-thrush"] .front {
+[data-slug="song-thrush"] .front {
   background-color: var(--fountain-blue);
 }
-div[data-slug="wren"] .front {
+[data-slug="wren"] .front {
   background-color: var(--juniper);
 }
-
 .back {
     /* Card background from Lea Verou's CSS Patterns Gallery CSS: https://projects.verou.me/css3patterns/#shippo */
     background-color:#def;
@@ -239,34 +221,28 @@ div[data-slug="wren"] .front {
     radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%);
     background-size:1rem 1rem;
     background-position:0 0, .5rem .5rem;
-    /* background-position: center center; */
     border: .5rem solid var(--text-color);
-
 }
-
+.results p {
+  margin: .75em 0 .25em;
+  text-align: left;
+}
 .controls {
     display: flex;
     justify-content: center;
 }
-
 .controls > * {
   background-color: var(--btn-color);
   border-radius: 2rem;
   border: none;
-  margin: 1rem .5rem;
-
+  margin: .5rem;
 }
 button {
     font-size: .875em;
     padding: .75rem 2rem;
     text-transform: uppercase;
-    /*background-color: var(--btn-color);
-    border-radius: 2rem;
-    border: none;
-    margin: 1rem 2rem; */
+    color: var(--bg-page-color);
 }
-
-/* Page footer */
 footer {
     font-size: .75em;
     padding: 1rem;
