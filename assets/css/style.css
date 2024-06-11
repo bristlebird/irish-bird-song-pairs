@@ -264,6 +264,7 @@ main {
   background-color: transparent;
   padding: 0;
   border-radius: 0;
+  justify-content: center;
 }
 .bird-audio {
   display: flex;
@@ -278,9 +279,7 @@ main {
   margin-left: .25rem;
   white-space: nowrap;
   color: var(--text-color);
-  width: 20px;
   height: 1rem;
-  background-color: #396268;
 }
 /* 3 audio states: on (with image), off (with image), only (on without image) */
 /* audio off - show birds & hide notes */
@@ -319,4 +318,38 @@ audio {
 footer {
     font-size: .75em;
     padding: 1rem;
+}
+/* tablet vertical */
+@media screen and (min-width: 50rem) {
+  body {
+    font-size: 1.75em; 
+  }
+  main {
+      max-width: 38rem;   
+  }  
+  #board {
+      grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+      grid-gap: 1.5rem;
+      min-height: 680px;
+  }
+  .card {
+      min-height: calc(120px + 2rem);
+  }
+}  
+/* tablet horizontal */
+@media screen and (min-width: 73rem) {
+  h1 {
+    margin: .5em 0 .25em;
+  }
+  main {
+      max-width: 69rem;   
+  }
+  #board {
+    grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+    min-height: 564px;
+  }
+  .card {
+      min-height: calc(140px + 2rem);
+  }
+
 }
