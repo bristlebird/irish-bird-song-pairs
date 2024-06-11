@@ -44,9 +44,13 @@ function renderBoard() {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card');
         cardItem.setAttribute('data-slug', slugify(card.name)); // convert name to slug for clean data attribute
+        let webp120 = card.image.replace('.webp', '-120.webp'), webp240 = card.image.replace('.webp', '-240.webp'), webp480 = card.image.replace('.webp', '-480.webp'), jpg240 = card.image.replace('.webp', '-240.jpg');
         cardItem.innerHTML = `
             <figure class="front">
-                <img class="card__img" src="${card.image}" width="60" height="60" alt="${card.name}">              
+                <picture>
+                    <source srcset="${card.image} 60w, ${webp120} 120w, ${webp240} 240w, ${webp480} 480w" sizes="23vw" type="image/webp">
+                    <img class="card__img" src="${card.image}" srcset="${jpg240} 240w" sizes="23vw" width="60" height="60" alt="${card.name}">
+                </picture>            
             </figure>
             <div class="back"></div>
         `;
