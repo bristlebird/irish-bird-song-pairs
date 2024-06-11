@@ -177,6 +177,8 @@ main {
 .front, .back {
     /* hide card when rotated */
     backface-visibility: hidden;
+    transition: bakcground-color .3s ease-in-out, opacity .3s ease-in-out;
+
     /* absolutely position both faces to fill card space */
     position: absolute;
     height: 100%;
@@ -226,6 +228,10 @@ main {
 .images-off .front {
   opacity: 0.75;
   background-color: var(--btn-color) !important;
+  background-image: url('../img/bird-notes.svg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .back {
     /* Card background from Lea Verou's CSS Patterns Gallery CSS: https://projects.verou.me/css3patterns/#shippo */
@@ -319,6 +325,7 @@ footer {
     font-size: .75em;
     padding: 1rem;
 }
+
 /* tablet vertical */
 @media screen and (min-width: 50rem) {
   body {
