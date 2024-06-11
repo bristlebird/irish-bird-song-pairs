@@ -1,35 +1,36 @@
 /*
 Irish bird song pairs function list:
-1. Initialise (Read card data, shuffle then render)
-2. Shuffle
-3. Render board
-4. Flip card on click
-5. Check for match (once 2nd card flipped)
-6. Lock matched cards
-7. Unflip when no match
-8. Reset to enable next turn
-9. New Game (Restart)
-10. Slugify helper
+- Initialise (Read card data, shuffle then render)
+- Shuffle
+- Render board
+- Flip card on click
+- Check for match (once 2nd card flipped)
+- Lock matched cards
+- Unflip when no match
+- Reset to enable next turn
+- New Game (Restart)
+- Switch audio play mode
+- Display Moves made
+- Slugify helper
 */
 
 // Set up some variables
 let cards = [], card1, card2; // array for cards html & cards in play.
 let inPlay = true; // set to false after each turn
-let movesMade = 0;
-const moves = document.getElementById('moves');
-const currentBird = document.getElementById('bird');
+let movesMade = 0; 
+let pairsMatched = 0; // game over when this reaches half length of cards array
 let birdSong = false; // whether to play bird song or not
-let showImage = true; // whether to show bird image or not
+let showImage = true; // whether image displayed or not
 
-const currentSong = document.getElementById('bird-song');
-const board = document.getElementById('board'); // container to put html cards in 
+// add some event listeners to buttons
 const restartBtn = document.getElementById('restart');
 restartBtn.addEventListener('click', newGame); // Button to restart / reset game
 const audioControl = document.getElementById('audio-control');
 audioControl.addEventListener('click', switchAudio); // use to control audio / play modes
+const board = document.getElementById('board'); // container to put html cards in 
 
 /**
- * 1) Initialise with immediatley invoked function / IFFE
+ * Initialise with immediatley invoked function / IFFE
  * - Read raw card data from githubusercontent as relative paths don't work with github pages
  */  
 (function () {
@@ -43,7 +44,7 @@ audioControl.addEventListener('click', switchAudio); // use to control audio / p
 })();
 
 /**
- * 2) Shuffle Array 
+ * Shuffle Array 
  * - using Fisher-Yates Sorting Algorithm:
  * https://medium.com/@khaledhassan45/how-to-shuffle-an-array-in-javascript-6ca30d53f772
  */
@@ -56,7 +57,7 @@ function shuffleArray(arr) {
 }
 
 /**
- * 3) Render Board 
+ * Render Board 
  * - assemble card html from cards array and attach to the board
  */
 function renderBoard() {
@@ -80,7 +81,7 @@ function renderBoard() {
 }
 
 /**
- * 4) Flip 
+ * Flip 
  * - only flip card if turn is active play
  */
 function flip() {
@@ -88,9 +89,11 @@ function flip() {
         if (this === card1 ) return; // do nothing & exit if card1 clicked again.
         this.classList.add('active'); // in play so set to active to flip card
         // get name from alt tag and set as name of current bird
-        currentBird.innerHTML = this.querySelector('.card__img').getAttribute('alt');
+
+        if (showImage) displayBirdName(this.querySelector('.card__img').getAttribute('alt'));
         // play current song if audio enabled.
         if (birdSong) {
+            const currentSong = document.getElementById('bird-song');
             currentSong.setAttribute('src', 'assets/audio/' + this.dataset.slug + '.mp3');
             currentSong.play();
         }
@@ -105,11 +108,10 @@ function flip() {
 }
 
 /**
- * 5) Check for Match
+ * Check for Match
  * - once 2 cards are flipped / active, check if card1 & card2 slugs are same
  */
 function checkForMatch() {
-    console.log('checking for match');
     // if data slugs match disable clicks else unflip.
     if (card1.dataset.slug === card2.dataset.slug) {
         lockMatched();
@@ -117,21 +119,24 @@ function checkForMatch() {
         unFlip();
     }
     // increment & update moves made
-    moves.innerHTML = ++movesMade;
+    displayMoves(++movesMade);
 }
 
 /**
- * 6) Lock Matched 
+ * Lock Matched 
  *  - replace active class with match class (pointer-events set to none to disable click)
  */
 function lockMatched() {
     card1.classList.replace('active', 'match');
     card2.classList.replace('active', 'match');
+    if (pairsMatched++ === cards.length/2) {
+        gameOver();
+    };
     resetTurn(); // reset for next turn
 }
 
 /**
- * 7) Unflip 
+ * Unflip 
  * - when no match by removing active class after 1 second delay
  */
 function unFlip() {
@@ -143,7 +148,7 @@ function unFlip() {
 }
 
 /**
- * 8) Reset Turn
+ * Reset Turn
  * - enables next turn after pair matched or unflipped by clearing pair in play
  */
 function resetTurn() {
@@ -152,7 +157,7 @@ function resetTurn() {
 }
 
 /**
- * 9) New Game (called from Restart button click)
+ * New Game (called from Restart button click)
  * - turn cards face down, shuffle deck in array, 
  * empty the board then render shuffled cards & reset variables
  */
@@ -170,8 +175,10 @@ function newGame() {
         renderBoard();  
         resetTurn();
         movesMade = 0;
-        moves.innerHTML = 0; 
-        currentBird.innerHTML = '';   
+        // const moves = document.getElementById('moves');
+        // moves.innerHTML = 0;
+        displayMoves(movesMade); 
+        displayBirdName('');
     }, 500);
 }
 
@@ -185,25 +192,54 @@ function newGame() {
  */
 function switchAudio() {
     if (this.classList.contains('audio-off')) {
+        // switch to audio on 
         this.classList.replace('audio-off', 'audio-on');
         birdSong = true;
+        showImage = true;
     } else if (this.classList.contains('audio-on')) {
+        // switch to audio only
         this.classList.replace('audio-on', 'audio-only');
         board.classList.add('images-off');
         birdSong = true;
+        showImage = false;
+        displayBirdName('???'); // hide bird names
+
     } else if (this.classList.contains('audio-only')) {
+        // switch to audio off
         this.classList.replace('audio-only', 'audio-off');
         board.classList.remove('images-off');
         birdSong = false;
+        showImage = true;
     }
 }
+
+/**
+ * Display Moves
+ * - update move made in game UI 
+ * - put display update into function to avoid leaving variable in global scope
+ */
+function displayMoves(value) {
+    const moves = document.getElementById('moves');
+    moves.innerHTML = value;
+}
+
+/**
+ * Display Bird name
+ * - update last clicked bird in game UI 
+ * - put display update into function to avoid leaving variable in global scope
+ */
+function displayBirdName(value) {
+    const currentBird = document.getElementById('bird');
+    currentBird.innerHTML = value;
+}
+
 
 // ====================================================================
 // HELPER FUNCTIONS
 // ====================================================================
 
 /**
- * 10) Slugify
+ * Slugify
  * - convert name to lowercase, hyphenated slug for data attributes
  * https://byby.dev/js-slugify-string
  */
