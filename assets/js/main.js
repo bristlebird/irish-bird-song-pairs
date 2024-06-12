@@ -129,9 +129,6 @@ function checkForMatch() {
 function lockMatched() {
     card1.classList.replace('active', 'match');
     card2.classList.replace('active', 'match');
-    if (pairsMatched++ === cards.length/2) {
-        gameOver();
-    };
     resetTurn(); // reset for next turn
 }
 
