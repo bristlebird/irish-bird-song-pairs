@@ -19,7 +19,6 @@ Irish bird song pairs function list:
 let cards = [], card1, card2; // array for cards html & cards in play.
 let inPlay = true; // set to false after each turn
 let movesMade = 0; 
-let pairsMatched = 0; // game over when this reaches half length of cards array
 let birdSong = false; // whether to play bird song or not
 let showImage = true; // whether image displayed or not
 
