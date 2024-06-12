@@ -76,6 +76,18 @@ The site achieves high scores on all Google Lighthouse Page speed:
 [https://pagespeed.web.dev/analysis/https-bristlebird-github-io-irish-bird-song-pairs/jcuc3t0h7x](https://pagespeed.web.dev/analysis/https-bristlebird-github-io-irish-bird-song-pairs/jcuc3t0h7x)
 
 ![Google Lighthouse Score](docs/images/lighthouse.jpg)
+## Bugs & fixes
+No major bugs were found. That said in the `newGame()` function, I found I had to use
+ `
+ for (let card of matchedCards) { card.classList.remove('match');  }
+ ` 
+ 
+ Instead of:
+ 
+  `
+ matchedCards.foreach(card => card.classList.remove('match'));
+ `
+ 
 
 ## Deployment
 
@@ -94,6 +106,7 @@ The site has been deployed to Github pages from the master branch of this reposi
 ### Design 
 - Bird Illustrations are copyright of [Bex Shelford](https://bexshelford.com), used with kind permission.
 - Color namer by Chirag Mehta: [https://chir.ag/projects/name-that-color/](https://chir.ag/projects/name-that-color/) — used to name hex colors in css custom properties
+- Colour contrast was checked using [ColorKit's Colour contrast checker](https://colorkit.co/contrast-checker/5e2753-e0edd2/)
 - Bird icons by Lee Mette from [Noun Project](https://thenounproject.com/browse/collection-icon/tweeting-birds-5456/) (CC BY 3.0)
 - Favicon created with: [https://favicon.io/favicon-converter/](https://favicon.io/favicon-converter/)
 
